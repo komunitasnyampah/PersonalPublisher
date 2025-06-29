@@ -5,6 +5,9 @@ import {
   type Tag, type InsertTag, type PostWithDetails, type CommentWithAuthor,
   type UserStats, type CommunityStats
 } from "@shared/schema";
+import { neon } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/neon-http';
+import { eq, desc, like, and, count, sql } from 'drizzle-orm';
 
 export interface IStorage {
   // Users
@@ -542,4 +545,352 @@ export class MemStorage implements IStorage {
   }
 }
 
-export const storage = new MemStorage();
+// Supabase Storage Implementation
+class SupabaseStorage implements IStorage {
+  private db;
+
+  constructor() {
+    const sql = neon(process.env.DATABASE_URL!);
+    this.db = drizzle(sql);
+  }
+
+  // Initialize database with sample data
+  async init() {
+    // Seed categories
+    const categoryData = [
+      { name: "Environment", slug: "environment", color: "#16a34a", description: "Environmental conservation and sustainability topics" },
+      { name: "Energy", slug: "energy", color: "#0ea5e9", description: "Renewable energy and clean technology" },
+      { name: "Economy", slug: "economy", color: "#f59e0b", description: "Sustainable economic practices and green business" },
+      { name: "Technology", slug: "technology", color: "#8b5cf6", description: "Decentralized and green technology innovations" }
+    ];
+
+    try {
+      for (const cat of categoryData) {
+        await this.db.insert(categories).values(cat).onConflictDoNothing();
+      }
+
+      // Seed users
+      const userData = [
+        { username: "sarah_chen", email: "sarah@example.com", avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786", bio: "Environmental scientist passionate about climate change", title: "Climate Researcher", postsCount: 5, followersCount: 1240 },
+        { username: "david_johnson", email: "david@example.com", avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d", bio: "Renewable energy engineer", title: "Solar Engineer", postsCount: 3, followersCount: 892 },
+        { username: "mike_khan", email: "mike@example.com", avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e", bio: "Blockchain developer focusing on environmental applications", title: "DeFi Developer", postsCount: 2, followersCount: 567 },
+        { username: "anna_lee", email: "anna@example.com", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80", bio: "Community organizer for environmental initiatives", title: "Community Leader", postsCount: 4, followersCount: 1580 },
+        { username: "carlos_mendez", email: "carlos@example.com", avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e", bio: "Green technology entrepreneur", title: "Startup Founder", postsCount: 6, followersCount: 2100 }
+      ];
+
+      for (const user of userData) {
+        await this.db.insert(users).values(user).onConflictDoNothing();
+      }
+
+      // Seed tags
+      const tagData = [
+        { name: "Solar", slug: "solar", color: "#f59e0b" },
+        { name: "Blockchain", slug: "blockchain", color: "#8b5cf6" },
+        { name: "Sustainability", slug: "sustainability", color: "#16a34a" },
+        { name: "DeFi", slug: "defi", color: "#6366f1" },
+        { name: "Wind Energy", slug: "wind-energy", color: "#0ea5e9" },
+        { name: "Carbon Credits", slug: "carbon-credits", color: "#10b981" }
+      ];
+
+      for (const tag of tagData) {
+        await this.db.insert(tags).values(tag).onConflictDoNothing();
+      }
+
+      // Seed posts
+      const postData = [
+        {
+          title: "Revolusi Panel Surya: Bagaimana Teknologi Baru Mengubah Energi Terbarukan",
+          content: "Panel surya generasi terbaru dengan efisiensi hingga 45% mulai merevolusi industri energi terbarukan di Indonesia...",
+          excerpt: "Teknologi panel surya terbaru dengan efisiensi tinggi membuka peluang besar untuk transisi energi di Indonesia.",
+          coverImage: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d",
+          categoryId: 2,
+          authorId: 1,
+          readTime: 5,
+          likes: 234,
+          views: 1420,
+          featured: true
+        },
+        {
+          title: "Blockchain untuk Kredit Karbon: Transparansi dalam Perdagangan Emisi",
+          content: "Teknologi blockchain memberikan transparansi yang belum pernah ada sebelumnya dalam perdagangan kredit karbon...",
+          excerpt: "Menggunakan blockchain untuk menciptakan sistem perdagangan kredit karbon yang transparan dan dapat diaudit.",
+          coverImage: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0",
+          categoryId: 4,
+          authorId: 3,
+          readTime: 7,
+          likes: 189,
+          views: 956,
+          featured: true
+        },
+        {
+          title: "Komunitas Pengolahan Sampah: Mengubah Limbah Jadi Berkah",
+          content: "Inisiatif komunitas lokal berhasil mengubah cara pengelolaan sampah dengan teknologi biogas sederhana...",
+          excerpt: "Bagaimana komunitas lokal menggunakan teknologi sederhana untuk mengolah sampah organik menjadi energi.",
+          coverImage: "https://images.unsplash.com/photo-1532996122724-e3c354a0b15b",
+          categoryId: 1,
+          authorId: 4,
+          readTime: 4,
+          likes: 156,
+          views: 823,
+          featured: false
+        },
+        {
+          title: "Energi Angin Lepas Pantai: Masa Depan Indonesia",
+          content: "Potensi energi angin lepas pantai Indonesia mencapai 60 GW, namun baru 0.1% yang dimanfaatkan...",
+          excerpt: "Eksplorasi potensi besar energi angin lepas pantai Indonesia dan tantangan pengembangannya.",
+          coverImage: "https://images.unsplash.com/photo-1466611653911-95081537e5b7",
+          categoryId: 2,
+          authorId: 2,
+          readTime: 6,
+          likes: 201,
+          views: 1134,
+          featured: false
+        },
+        {
+          title: "Smart Grid dan Penyimpanan Energi: Menuju Sistem Energi Terdesentralisasi",
+          content: "Kombinasi smart grid dan teknologi penyimpanan energi memungkinkan transisi menuju sistem energi yang sepenuhnya terbarukan...",
+          excerpt: "Understanding how smart grid technology and advanced energy storage solutions are enabling the renewable energy transition.",
+          coverImage: "https://images.unsplash.com/photo-1559827260-dc66d52bef19",
+          categoryId: 2,
+          authorId: 5,
+          readTime: 6,
+          likes: 112,
+          views: 634,
+          featured: false
+        }
+      ];
+
+      for (const post of postData) {
+        await this.db.insert(posts).values(post).onConflictDoNothing();
+      }
+
+      console.log("✅ Database seeded successfully");
+    } catch (error) {
+      console.error("Error seeding database:", error);
+    }
+  }
+
+  async getUser(id: number): Promise<User | undefined> {
+    const result = await this.db.select().from(users).where(eq(users.id, id));
+    return result[0];
+  }
+
+  async getUserByUsername(username: string): Promise<User | undefined> {
+    const result = await this.db.select().from(users).where(eq(users.username, username));
+    return result[0];
+  }
+
+  async createUser(user: InsertUser): Promise<User> {
+    const result = await this.db.insert(users).values(user).returning();
+    return result[0];
+  }
+
+  async updateUser(id: number, user: Partial<InsertUser>): Promise<User> {
+    const result = await this.db.update(users).set(user).where(eq(users.id, id)).returning();
+    return result[0];
+  }
+
+  async getTopContributors(limit = 10): Promise<(User & UserStats)[]> {
+    const result = await this.db.select().from(users).orderBy(desc(users.postsCount)).limit(limit);
+    
+    return result.map((user, index) => ({
+      ...user,
+      totalPosts: user.postsCount || 0,
+      totalLikes: 0,
+      totalViews: 0,
+      rank: index + 1
+    }));
+  }
+
+  async getCategories(): Promise<Category[]> {
+    return await this.db.select().from(categories);
+  }
+
+  async getCategoryBySlug(slug: string): Promise<Category | undefined> {
+    const result = await this.db.select().from(categories).where(eq(categories.slug, slug));
+    return result[0];
+  }
+
+  async createCategory(category: InsertCategory): Promise<Category> {
+    const result = await this.db.insert(categories).values(category).returning();
+    return result[0];
+  }
+
+  async getPosts(filters?: { categoryId?: number; search?: string; featured?: boolean; limit?: number; offset?: number }): Promise<PostWithDetails[]> {
+    let query = this.db
+      .select({
+        post: posts,
+        author: users,
+        category: categories
+      })
+      .from(posts)
+      .leftJoin(users, eq(posts.authorId, users.id))
+      .leftJoin(categories, eq(posts.categoryId, categories.id))
+      .where(eq(posts.published, true));
+
+    if (filters?.categoryId) {
+      query = query.where(eq(posts.categoryId, filters.categoryId));
+    }
+    
+    if (filters?.featured !== undefined) {
+      query = query.where(eq(posts.featured, filters.featured));
+    }
+
+    query = query.orderBy(desc(posts.createdAt));
+
+    if (filters?.limit) {
+      query = query.limit(filters.limit);
+    }
+    
+    if (filters?.offset) {
+      query = query.offset(filters.offset);
+    }
+
+    const results = await query;
+    
+    return results.map(result => ({
+      ...result.post,
+      author: result.author!,
+      category: result.category!,
+      tags: [],
+      commentsCount: 0
+    }));
+  }
+
+  async getPost(id: number): Promise<PostWithDetails | undefined> {
+    const result = await this.db
+      .select({
+        post: posts,
+        author: users,
+        category: categories
+      })
+      .from(posts)
+      .leftJoin(users, eq(posts.authorId, users.id))
+      .leftJoin(categories, eq(posts.categoryId, categories.id))
+      .where(eq(posts.id, id));
+
+    if (!result[0]) return undefined;
+
+    return {
+      ...result[0].post,
+      author: result[0].author!,
+      category: result[0].category!,
+      tags: [],
+      commentsCount: 0
+    };
+  }
+
+  async getPostBySlug(slug: string): Promise<PostWithDetails | undefined> {
+    const result = await this.db
+      .select({
+        post: posts,
+        author: users,
+        category: categories
+      })
+      .from(posts)
+      .leftJoin(users, eq(posts.authorId, users.id))
+      .leftJoin(categories, eq(posts.categoryId, categories.id))
+      .where(eq(posts.slug, slug));
+
+    if (!result[0]) return undefined;
+
+    return {
+      ...result[0].post,
+      author: result[0].author!,
+      category: result[0].category!,
+      tags: [],
+      commentsCount: 0
+    };
+  }
+
+  async createPost(post: InsertPost): Promise<Post> {
+    const result = await this.db.insert(posts).values(post).returning();
+    return result[0];
+  }
+
+  async updatePost(id: number, post: Partial<InsertPost>): Promise<Post> {
+    const result = await this.db.update(posts).set(post).where(eq(posts.id, id)).returning();
+    return result[0];
+  }
+
+  async deletePost(id: number): Promise<boolean> {
+    const result = await this.db.delete(posts).where(eq(posts.id, id));
+    return result.count > 0;
+  }
+
+  async incrementPostViews(id: number): Promise<void> {
+    await this.db.update(posts).set({ views: sql`${posts.views} + 1` }).where(eq(posts.id, id));
+  }
+
+  async incrementPostLikes(id: number): Promise<void> {
+    await this.db.update(posts).set({ likes: sql`${posts.likes} + 1` }).where(eq(posts.id, id));
+  }
+
+  async getCommentsByPostId(postId: number): Promise<CommentWithAuthor[]> {
+    return [];
+  }
+
+  async createComment(comment: InsertComment): Promise<Comment> {
+    const result = await this.db.insert(comments).values(comment).returning();
+    return result[0];
+  }
+
+  async deleteComment(id: number): Promise<boolean> {
+    const result = await this.db.delete(comments).where(eq(comments.id, id));
+    return result.count > 0;
+  }
+
+  async getTags(): Promise<Tag[]> {
+    return await this.db.select().from(tags);
+  }
+
+  async getTagBySlug(slug: string): Promise<Tag | undefined> {
+    const result = await this.db.select().from(tags).where(eq(tags.slug, slug));
+    return result[0];
+  }
+
+  async createTag(tag: InsertTag): Promise<Tag> {
+    const result = await this.db.insert(tags).values(tag).returning();
+    return result[0];
+  }
+
+  async addTagToPost(postId: number, tagId: number): Promise<void> {
+    await this.db.insert(postTags).values({ postId, tagId }).onConflictDoNothing();
+  }
+
+  async getCommunityStats(): Promise<CommunityStats> {
+    const [userCount] = await this.db.select({ count: count() }).from(users);
+    const [postCount] = await this.db.select({ count: count() }).from(posts);
+    
+    return {
+      activeMembers: Math.min(userCount.count || 0, 50),
+      monthlyPosts: Math.min(postCount.count || 0, 25),
+      co2Saved: "1,240 kg",
+      totalPosts: postCount.count || 0,
+      totalMembers: userCount.count || 0
+    };
+  }
+
+  async getRecentActivity(limit = 10): Promise<any[]> {
+    const recentPosts = await this.db
+      .select({
+        post: posts,
+        author: users
+      })
+      .from(posts)
+      .leftJoin(users, eq(posts.authorId, users.id))
+      .orderBy(desc(posts.createdAt))
+      .limit(limit);
+
+    return recentPosts.map(({ post, author }) => ({
+      type: "post",
+      user: author?.username || "Unknown",
+      action: "published a new post",
+      target: post.title,
+      timestamp: post.createdAt?.toISOString() || new Date().toISOString()
+    }));
+  }
+}
+
+// Create instance based on environment
+export const storage = process.env.DATABASE_URL ? new SupabaseStorage() : new MemStorage();
