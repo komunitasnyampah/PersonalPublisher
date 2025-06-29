@@ -892,5 +892,5 @@ class SupabaseStorage implements IStorage {
   }
 }
 
-// Create instance based on environment
-export const storage = process.env.DATABASE_URL ? new SupabaseStorage() : new MemStorage();
+// Create instance based on environment - temporarily use MemStorage until database connection is fixed
+export const storage = new MemStorage(); // process.env.DATABASE_URL ? new SupabaseStorage() : new MemStorage();
