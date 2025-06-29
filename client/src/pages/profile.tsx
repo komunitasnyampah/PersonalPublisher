@@ -201,17 +201,17 @@ export default function Profile() {
           <div className="h-48 bg-gradient-to-r from-green-400 via-blue-500 to-green-600 relative">
             <div className="absolute inset-0 bg-black bg-opacity-20"></div>
             <div className="absolute top-4 right-4 flex gap-2">
-              <Button onClick={shareProfile} size="sm" variant="secondary" className="bg-white/90 hover:bg-white">
+              <Button onClick={shareProfile} size="sm" variant="secondary" className="bg-white/90 hover:bg-white" id="share-profile-btn">
                 <Share2 className="h-4 w-4 mr-1" />
                 Share
               </Button>
-              <Button onClick={downloadCV} size="sm" variant="secondary" className="bg-white/90 hover:bg-white">
+              <Button onClick={downloadCV} size="sm" variant="secondary" className="bg-white/90 hover:bg-white" id="download-cv-btn">
                 <Download className="h-4 w-4 mr-1" />
                 Download CV
               </Button>
-              <Button onClick={() => setIsEditing(!isEditing)} size="sm" variant="secondary" className="bg-white/90 hover:bg-white">
+              <Button onClick={() => setIsEditing(!isEditing)} size="sm" variant="secondary" className="bg-white/90 hover:bg-white" id="edit-profile-btn">
                 <Edit className="h-4 w-4 mr-1" />
-                Edit
+                {isEditing ? 'Save' : 'Edit'}
               </Button>
             </div>
           </div>
@@ -224,17 +224,17 @@ export default function Profile() {
                 <div className="w-32 h-32 bg-white rounded-full border-4 border-white shadow-lg flex items-center justify-center">
                   <User className="h-16 w-16 text-gray-400" />
                 </div>
-                <button className="absolute bottom-2 right-2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center border hover:bg-gray-50">
+                <button className="absolute bottom-2 right-2 w-8 h-8 bg-white rounded-full shadow-lg flex items-center justify-center border hover:bg-gray-50" id="profile-photo-btn">
                   <Camera className="h-4 w-4 text-gray-600" />
                 </button>
               </div>
               
               {/* Basic Info */}
               <div className="flex-1 pt-4">
-                <h1 className="text-3xl font-bold text-gray-900 mb-1" id="profile-name">
+                <h1 className="text-3xl font-bold text-gray-900 mb-1" id="profile-name" data-editable="true">
                   {profileData.fullName}
                 </h1>
-                <p className="text-xl text-gray-600 mb-2" id="profile-title">
+                <p className="text-xl text-gray-600 mb-2" id="profile-title" data-editable="true">
                   {profileData.title}
                 </p>
                 <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
@@ -319,149 +319,13 @@ export default function Profile() {
 
           {/* Right Column */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Experience */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Briefcase className="h-5 w-5" />
-                  Pengalaman Kerja
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {profileData.experience.map((exp, index) => (
-                  <div key={index} className="relative">
-                    {index !== profileData.experience.length - 1 && (
-                      <div className="absolute left-6 top-12 bottom-0 w-px bg-gray-200"></div>
-                    )}
-                    <div className="flex gap-4">
-                      <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <Briefcase className="h-5 w-5 text-green-600" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-lg">{exp.position}</h3>
-                        <p className="text-blue-600 font-medium">{exp.company}</p>
-                        <div className="flex items-center gap-4 text-sm text-gray-500 mb-2">
-                          <span className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" />
-                            {exp.period}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <MapPin className="h-4 w-4" />
-                            {exp.location}
-                          </span>
-                        </div>
-                        <p className="text-gray-700 text-sm leading-relaxed">{exp.description}</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+            <ExperienceSection experience={profileData.experience} />
+            
+            <EducationSection education={profileData.education} />
 
-            {/* Education */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <GraduationCap className="h-5 w-5" />
-                  Pendidikan
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {profileData.education.map((edu, index) => (
-                  <div key={index} className="relative">
-                    {index !== profileData.education.length - 1 && (
-                      <div className="absolute left-6 top-12 bottom-0 w-px bg-gray-200"></div>
-                    )}
-                    <div className="flex gap-4">
-                      <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
-                        <GraduationCap className="h-5 w-5 text-blue-600" />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-semibold text-lg">{edu.degree}</h3>
-                        <p className="text-blue-600 font-medium">{edu.institution}</p>
-                        <div className="flex items-center gap-4 text-sm text-gray-500 mb-2">
-                          <span className="flex items-center gap-1">
-                            <Calendar className="h-4 w-4" />
-                            {edu.period}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <MapPin className="h-4 w-4" />
-                            {edu.location}
-                          </span>
-                          <Badge variant="secondary" className="text-xs">
-                            GPA: {edu.gpa}
-                          </Badge>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+            <ProjectsSection projects={profileData.projects} />
 
-            {/* Projects Portfolio */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Star className="h-5 w-5" />
-                  Portfolio Projects
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {profileData.projects.map((project, index) => (
-                    <div key={index} className="border rounded-lg p-4 hover:shadow-md transition-shadow">
-                      <div className="w-full h-32 bg-gray-200 rounded-lg mb-3 flex items-center justify-center">
-                        <Camera className="h-8 w-8 text-gray-400" />
-                      </div>
-                      <h3 className="font-semibold mb-2">{project.title}</h3>
-                      <p className="text-sm text-gray-600 mb-3">{project.description}</p>
-                      <div className="flex flex-wrap gap-1 mb-3">
-                        {project.tech.map((tech, techIndex) => (
-                          <Badge key={techIndex} variant="outline" className="text-xs">
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                      <a 
-                        href={project.link} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="text-blue-600 hover:underline text-sm flex items-center gap-1"
-                      >
-                        <ExternalLink className="h-3 w-3" />
-                        View Project
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Achievements */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Trophy className="h-5 w-5" />
-                  Penghargaan & Sertifikasi
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {profileData.achievements.map((achievement, index) => (
-                  <div key={index} className="flex gap-4 p-4 border rounded-lg">
-                    <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center flex-shrink-0">
-                      <Award className="h-5 w-5 text-yellow-600" />
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold">{achievement.title}</h3>
-                      <p className="text-blue-600 font-medium text-sm">{achievement.issuer}</p>
-                      <p className="text-gray-500 text-sm mb-2">{achievement.year}</p>
-                      <p className="text-gray-700 text-sm">{achievement.description}</p>
-                    </div>
-                  </div>
-                ))}
-              </CardContent>
-            </Card>
+            <AchievementsSection achievements={profileData.achievements} />
           </div>
         </div>
       </div>

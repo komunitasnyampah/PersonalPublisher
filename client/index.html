@@ -38,6 +38,12 @@
               // Load interactive features after modals are ready
               const interactiveScript = document.createElement('script');
               interactiveScript.src = '/js/interactive-features.js';
+              interactiveScript.onload = function() {
+                // Load CV interactive features
+                const cvScript = document.createElement('script');
+                cvScript.src = '/js/cv-interactive.js';
+                document.head.appendChild(cvScript);
+              };
               document.head.appendChild(interactiveScript);
             };
             document.head.appendChild(modalScript);
