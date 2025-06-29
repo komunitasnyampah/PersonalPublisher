@@ -89,6 +89,7 @@ export default function Home() {
                 onClick={() => setSelectedCategory(null)}
                 className={selectedCategory === null ? "bg-eco-green hover:bg-eco-emerald" : ""}
                 id="btn-all-posts"
+                data-category="all"
               >
                 Semua Post
               </Button>
@@ -100,6 +101,7 @@ export default function Home() {
                   onClick={() => setSelectedCategory(category.id)}
                   className={selectedCategory === category.id ? "bg-eco-green hover:bg-eco-emerald" : ""}
                   id={`btn-category-${category.slug}`}
+                  data-category={category.slug}
                 >
                   {category.name}
                 </Button>

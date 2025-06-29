@@ -78,18 +78,34 @@ export function PostCard({ post, featured = false }: PostCardProps) {
           </div>
           
           <div className="flex items-center gap-4 text-sm text-gray-500">
-            <div className="flex items-center gap-1">
+            <button 
+              className="flex items-center gap-1 hover:text-red-500 transition-colors cursor-pointer"
+              data-post-like={post.id}
+              title="Suka artikel ini"
+            >
               <Heart className="h-4 w-4" />
-              <span>{post.likes}</span>
-            </div>
-            <div className="flex items-center gap-1">
+              <span className="like-count">{post.likes}</span>
+            </button>
+            <button 
+              className="flex items-center gap-1 hover:text-blue-500 transition-colors cursor-pointer"
+              onClick={() => window.interactiveModals?.showModal('comment-modal')}
+              title="Tulis komentar"
+            >
               <MessageCircle className="h-4 w-4" />
               <span>{post.commentsCount}</span>
-            </div>
-            <div className="flex items-center gap-1">
+            </button>
+            <button 
+              className="flex items-center gap-1 hover:text-green-500 transition-colors cursor-pointer"
+              onClick={() => navigator.share ? navigator.share({
+                title: post.title,
+                text: post.excerpt,
+                url: window.location.origin + `/post/${post.slug}`
+              }) : alert('Share link copied!')}
+              title="Bagikan artikel"
+            >
               <Share2 className="h-4 w-4" />
               <span>{Math.floor(post.views / 10)}</span>
-            </div>
+            </button>
           </div>
         </div>
       </CardContent>

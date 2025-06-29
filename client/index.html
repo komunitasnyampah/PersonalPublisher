@@ -22,24 +22,27 @@
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
     
-    <!-- DOM Access Script -->
+    <!-- Interactive JavaScript Scripts -->
     <script>
-      // Wait for React to render before loading DOM access script
+      // Wait for React to render before loading scripts
       window.addEventListener('load', function() {
         setTimeout(function() {
-          const script = document.createElement('script');
-          script.src = '/js/dom-access.js';
-          script.onload = function() {
-            console.log('✅ DOM Access Script Ready!');
-            
-            // Example interactions you can try in browser console:
-            console.log('🔧 Try these commands in console:');
-            console.log('   changeHeroTitle("Judul Baru!");');
-            console.log('   updateSearchPlaceholder("Cari sesuatu...");');
-            console.log('   hideElement("sidebar");');
-            console.log('   showElement("sidebar");');
+          // Load DOM access script first
+          const domScript = document.createElement('script');
+          domScript.src = '/js/dom-access.js';
+          domScript.onload = function() {
+            // Load modals
+            const modalScript = document.createElement('script');
+            modalScript.src = '/js/interactive-modals.js';
+            modalScript.onload = function() {
+              // Load interactive features after modals are ready
+              const interactiveScript = document.createElement('script');
+              interactiveScript.src = '/js/interactive-features.js';
+              document.head.appendChild(interactiveScript);
+            };
+            document.head.appendChild(modalScript);
           };
-          document.head.appendChild(script);
+          document.head.appendChild(domScript);
         }, 2000); // Wait 2 seconds for React to fully load
       });
     </script>
