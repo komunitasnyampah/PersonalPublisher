@@ -110,7 +110,16 @@ The application uses a relational database schema with the following core entiti
 
 Changelog:
 - June 29, 2025. Initial setup
+- December 29, 2024. **Nyampah Bersama Branding & DOM Structure Update:**
+  - Updated branding from "EcoConnect" to "Nyampah Bersama" with custom logo
+  - Added comprehensive DOM ID structure for all major elements
+  - Implemented JavaScript DOM access utilities
+  - Added 9 sample posts in Indonesian with environmental themes
+  - Enhanced SEO with Indonesian meta tags and Open Graph
+  - Added structured HTML for better accessibility
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Project Language: Indonesian (Bahasa Indonesia)
+Project Theme: Environmental waste management community blog
