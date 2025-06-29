@@ -179,6 +179,25 @@ The application uses a relational database schema with the following core entiti
 - Print-friendly version with optimized styling
 - Share profile functionality with clipboard integration
 
+**10. Document Management System**
+- Secure ID document storage at `/documents` with local encryption
+- Support for KTP, SIM, Passport, NPWP, BPJS, Bank accounts
+- Document visibility toggle and clipboard copy functionality
+- Expiry date tracking with visual warnings
+- Related links storage for document verification
+- Export functionality for backup purposes
+- Search and filter capabilities by type and importance level
+
+**11. Letter Generator System**
+- Professional letter templates for various purposes
+- Cover letters, resignation letters, recommendation letters
+- Permission requests, complaints, and general applications
+- Variable-based template system with form auto-fill
+- Real-time preview and content generation
+- Save, edit, and reuse letter functionality
+- Print-optimized formatting with professional styling
+- Export as text files and clipboard integration
+
 ### File Structure for JavaScript
 ```
 client/public/js/
@@ -204,11 +223,26 @@ toggleEditMode();               // Enable/disable editing
 setProjectsView("grid");        // Change projects layout
 filterProjects("web");          // Filter projects by category
 cvInteractive.showSkillDetails("React");  // Show skill details
+
+// Document Management Features
+document.getElementById("add-document-btn").click();  // Add new document
+// Access ID Manager and Letter Generator at /documents
 ```
 
 ## Changelog
 
 Changelog:
+- June 29, 2025. **Document Management & Letter Generator System:**
+  - Created comprehensive document management system at `/documents`
+  - Built secure ID storage for KTP, SIM, Passport, NPWP, BPJS, bank accounts
+  - Implemented document visibility toggle and expiry date tracking
+  - Added related links storage and export functionality
+  - Created professional letter generator with multiple templates
+  - Built template system for cover letters, resignation, recommendations
+  - Added permission requests, complaints, and application templates
+  - Implemented variable-based form system with real-time preview
+  - Created save/load functionality with localStorage persistence
+  - Added print optimization and export capabilities for letters
 - June 29, 2025. **Professional CV/Portfolio System:**
   - Created comprehensive profile page at `/profile` with professional CV layout
   - Built modular CV components (Experience, Education, Skills, Projects, Achievements)

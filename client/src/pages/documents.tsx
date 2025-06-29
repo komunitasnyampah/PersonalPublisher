@@ -46,7 +46,7 @@ export default function Documents() {
       description: "Export semua dokumen",
       action: () => {
         // Export functionality
-        if (window.showNotif) {
+        if ((window as any).showNotif) {
           (window as any).showNotif('Fitur backup dalam development', 'info');
         }
       }

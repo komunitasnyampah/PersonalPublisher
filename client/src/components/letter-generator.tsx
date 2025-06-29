@@ -369,8 +369,8 @@ export function LetterGenerator() {
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(generatedContent);
-    if (window.showNotif) {
-      window.showNotif('Surat berhasil dicopy ke clipboard!', 'success');
+    if ((window as any).showNotif) {
+      (window as any).showNotif('Surat berhasil dicopy ke clipboard!', 'success');
     }
   };
 
