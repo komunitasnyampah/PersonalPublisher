@@ -40,31 +40,31 @@ export function Footer() {
               </a>
             </div>
           </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Community</h3>
+          <div id="footer-community">
+            <h3 className="text-lg font-semibold mb-4">Komunitas</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Guidelines</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Events</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Contributors</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Newsletter</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" id="link-guidelines">Panduan</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" id="link-events">Acara</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" id="link-contributors">Kontributor</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" id="link-newsletter">Newsletter</a></li>
             </ul>
           </div>
-          <div>
-            <h3 className="text-lg font-semibold mb-4">Resources</h3>
+          <div id="footer-resources">
+            <h3 className="text-lg font-semibold mb-4">Sumber Daya</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Documentation</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">API</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Help Center</a></li>
-              <li><a href="#" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" id="link-documentation">Dokumentasi</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" id="link-api">API</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" id="link-help">Pusat Bantuan</a></li>
+              <li><a href="#" className="text-gray-400 hover:text-white transition-colors" id="link-contact">Kontak</a></li>
             </ul>
           </div>
         </div>
-        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 text-sm">© 2024 EcoConnect. All rights reserved.</p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Privacy Policy</a>
-            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a>
-            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors">Cookie Policy</a>
+        <div className="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center" id="footer-bottom">
+          <p className="text-gray-400 text-sm" id="footer-copyright">© 2024 Nyampah Bersama. Semua hak dilindungi.</p>
+          <div className="flex space-x-6 mt-4 md:mt-0" id="footer-legal-links">
+            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors" id="link-privacy">Kebijakan Privasi</a>
+            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors" id="link-terms">Syarat Layanan</a>
+            <a href="#" className="text-gray-400 hover:text-white text-sm transition-colors" id="link-cookies">Kebijakan Cookie</a>
           </div>
         </div>
       </div>

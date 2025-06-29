@@ -1,12 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>Nyampah Bersama - Blog Komunitas Lingkungan</title>
+    <meta name="description" content="Bergabunglah dengan komunitas Nyampah Bersama dalam mengadvokasi lingkungan, energi terbarukan, dan teknologi desentralisasi untuk masa depan berkelanjutan." />
+    <meta name="keywords" content="lingkungan, energi terbarukan, ekonomi berkelanjutan, teknologi desentralisasi, komunitas, blog" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Nyampah Bersama - Blog Komunitas Lingkungan" />
+    <meta property="og:description" content="Bergabunglah dengan komunitas Nyampah Bersama dalam mengadvokasi lingkungan, energi terbarukan, dan teknologi desentralisasi." />
+    <meta property="og:site_name" content="Nyampah Bersama" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nyampah Bersama - Blog Komunitas Lingkungan" />
+    <meta name="twitter:description" content="Bergabunglah dengan komunitas Nyampah Bersama dalam mengadvokasi lingkungan, energi terbarukan, dan teknologi desentralisasi." />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- DOM Access Script -->
+    <script>
+      // Wait for React to render before loading DOM access script
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const script = document.createElement('script');
+          script.src = '/js/dom-access.js';
+          script.onload = function() {
+            console.log('✅ DOM Access Script Ready!');
+            
+            // Example interactions you can try in browser console:
+            console.log('🔧 Try these commands in console:');
+            console.log('   changeHeroTitle("Judul Baru!");');
+            console.log('   updateSearchPlaceholder("Cari sesuatu...");');
+            console.log('   hideElement("sidebar");');
+            console.log('   showElement("sidebar");');
+          };
+          document.head.appendChild(script);
+        }, 2000); // Wait 2 seconds for React to fully load
+      });
+    </script>
+    
     <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
     <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
   </body>

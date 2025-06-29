@@ -168,6 +168,54 @@ export class MemStorage implements IStorage {
         readTime: 6,
         likes: 112,
         views: 634
+      },
+      {
+        title: "Cara Mudah Memulai Kompos di Rumah untuk Pemula",
+        content: "Kompos adalah cara mudah mengurangi sampah organik sambil menciptakan pupuk alami...",
+        excerpt: "Panduan lengkap memulai kompos di rumah dengan bahan-bahan sederhana yang mudah ditemukan.",
+        coverImage: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b",
+        categoryId: 1,
+        authorId: 4,
+        readTime: 4,
+        likes: 89,
+        views: 567,
+        featured: false
+      },
+      {
+        title: "Mengapa Energi Surya Adalah Investasi Terbaik untuk Masa Depan",
+        content: "Dengan biaya panel surya yang terus menurun, investasi energi surya menjadi semakin menarik...",
+        excerpt: "Analisis investasi energi surya dan dampak positifnya terhadap lingkungan dan keuangan keluarga.",
+        coverImage: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d",
+        categoryId: 2,
+        authorId: 1,
+        readTime: 7,
+        likes: 145,
+        views: 892,
+        featured: false
+      },
+      {
+        title: "DeFi untuk Pembiayaan Proyek Lingkungan: Peluang dan Tantangan",
+        content: "Decentralized Finance membuka peluang baru untuk mendanai proyek-proyek lingkungan...",
+        excerpt: "Bagaimana teknologi DeFi dapat membantu membiayai proyek lingkungan dengan cara yang transparan.",
+        coverImage: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0",
+        categoryId: 4,
+        authorId: 3,
+        readTime: 8,
+        likes: 73,
+        views: 445,
+        featured: false
+      },
+      {
+        title: "5 Teknologi Hijau yang Akan Mengubah Dunia di 2025",
+        content: "Dari teknologi penangkap karbon hingga bioplastik, inilah inovasi yang akan membentuk masa depan...",
+        excerpt: "Teknologi hijau terdepan yang siap merevolusi cara kita berinteraksi dengan lingkungan.",
+        coverImage: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
+        categoryId: 2,
+        authorId: 5,
+        readTime: 6,
+        likes: 198,
+        views: 1123,
+        featured: false
       }
     ];
 
@@ -182,6 +230,19 @@ export class MemStorage implements IStorage {
         updatedAt: new Date()
       };
       this.posts.set(newPost.id, newPost);
+      
+      // Add tags to posts
+      if (newPost.id === 1) { // Solar post
+        this.postTagsMap.set(newPost.id, [1, 3]); // Solar, Sustainability
+      } else if (newPost.id === 2) { // Blockchain post
+        this.postTagsMap.set(newPost.id, [2, 4, 6]); // Blockchain, DeFi, Carbon Credits
+      } else if (newPost.id === 3) { // Community waste post
+        this.postTagsMap.set(newPost.id, [3]); // Sustainability
+      } else if (newPost.id === 4) { // Wind energy post
+        this.postTagsMap.set(newPost.id, [5, 3]); // Wind Energy, Sustainability
+      } else if (newPost.id === 5) { // Smart grid post
+        this.postTagsMap.set(newPost.id, [1, 5]); // Solar, Wind Energy
+      }
     });
   }
 
