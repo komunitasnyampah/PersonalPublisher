@@ -16,6 +16,7 @@ export function Navigation() {
     { href: "/dashboard", label: "Dashboard" },
     { href: "/write", label: "Write" },
     { href: "/profile", label: "Profil CV" },
+    { href: "/documents", label: "Dokumen" },
     { href: "/demo", label: "Demo JS" },
   ];
 
