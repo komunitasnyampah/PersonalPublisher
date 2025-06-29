@@ -9,6 +9,7 @@ import Home from "@/pages/home";
 import Dashboard from "@/pages/dashboard";
 import Write from "@/pages/write";
 import PostPage from "@/pages/post";
+import Demo from "@/pages/demo";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -17,6 +18,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/write" component={Write} />
+      <Route path="/demo" component={Demo} />
       <Route path="/post/:slug" component={PostPage} />
       <Route component={NotFound} />
     </Switch>

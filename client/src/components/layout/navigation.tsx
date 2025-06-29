@@ -15,6 +15,7 @@ export function Navigation() {
     { href: "/", label: "Home" },
     { href: "/dashboard", label: "Dashboard" },
     { href: "/write", label: "Write" },
+    { href: "/demo", label: "Demo JS" },
   ];
 
   const handleSearch = (e: React.FormEvent) => {

@@ -47,7 +47,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
           <span>•</span>
           <span>{post.readTime} min read</span>
           <span>•</span>
-          <span>{formatDate(post.createdAt)}</span>
+          <span>{formatDate(post.createdAt || new Date())}</span>
         </div>
         
         <Link href={`/post/${post.slug}`}>
@@ -88,7 +88,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
             </button>
             <button 
               className="flex items-center gap-1 hover:text-blue-500 transition-colors cursor-pointer"
-              onClick={() => window.interactiveModals?.showModal('comment-modal')}
+              onClick={() => (window as any).interactiveModals?.showModal('comment-modal')}
               title="Tulis komentar"
             >
               <MessageCircle className="h-4 w-4" />
@@ -104,7 +104,7 @@ export function PostCard({ post, featured = false }: PostCardProps) {
               title="Bagikan artikel"
             >
               <Share2 className="h-4 w-4" />
-              <span>{Math.floor(post.views / 10)}</span>
+              <span>{Math.floor((post.views || 0) / 10)}</span>
             </button>
           </div>
         </div>
