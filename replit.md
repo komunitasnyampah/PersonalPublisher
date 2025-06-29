@@ -184,30 +184,42 @@ The application uses a relational database schema with the following core entiti
 client/public/js/
 ├── dom-access.js          # Basic DOM element access utilities
 ├── interactive-features.js  # Main interactive system class
-└── interactive-modals.js   # Modal components and handlers
+├── interactive-modals.js   # Modal components and handlers
+└── cv-interactive.js       # CV/Portfolio interactive features
 ```
 
 ### Usage Examples
 ```javascript
-// Change hero title dynamically
+// Basic Interactive Features
 changeHeroTitle("Judul Baru!");
-
-// Add user points with validation
 addPoin(50);
-
-// Show notifications
 showNotif("Success message!", "success");
-
-// Toggle theme
 nyampahInteractive.toggleTheme();
-
-// Open modals programmatically
 interactiveModals.showModal("login-modal");
+
+// CV/Portfolio Features
+downloadCV();                    // Download CV as PDF
+shareProfile();                  // Share profile link
+toggleEditMode();               // Enable/disable editing
+setProjectsView("grid");        // Change projects layout
+filterProjects("web");          // Filter projects by category
+cvInteractive.showSkillDetails("React");  // Show skill details
 ```
 
 ## Changelog
 
 Changelog:
+- June 29, 2025. **Professional CV/Portfolio System:**
+  - Created comprehensive profile page at `/profile` with professional CV layout
+  - Built modular CV components (Experience, Education, Skills, Projects, Achievements)
+  - Implemented CV-specific JavaScript interactive system (cv-interactive.js)
+  - Added download CV as PDF functionality with print optimization
+  - Created real-time profile editing with auto-save capabilities
+  - Built portfolio projects showcase with filtering and modal details
+  - Added skills interaction with visual feedback and tooltips
+  - Integrated social media tracking and share profile functionality
+  - Designed print-friendly version with optimized styling for CV printing
+  - Added DOM structure with IDs and data attributes for full interactivity
 - June 29, 2025. **JavaScript Interactive System Implementation:**
   - Built comprehensive event listener system for all user interactions
   - Implemented form handlers with real-time validation (email, password, required fields)
