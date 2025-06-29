@@ -15,6 +15,7 @@ export function Navigation() {
     { href: "/", label: "Home" },
     { href: "/dashboard", label: "Dashboard" },
     { href: "/write", label: "Write" },
+    { href: "/profile", label: "Profil CV" },
     { href: "/demo", label: "Demo JS" },
   ];
 

@@ -10,6 +10,7 @@ import Dashboard from "@/pages/dashboard";
 import Write from "@/pages/write";
 import PostPage from "@/pages/post";
 import Demo from "@/pages/demo";
+import Profile from "@/pages/profile";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -19,6 +20,7 @@ function Router() {
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/write" component={Write} />
       <Route path="/demo" component={Demo} />
+      <Route path="/profile" component={Profile} />
       <Route path="/post/:slug" component={PostPage} />
       <Route component={NotFound} />
     </Switch>
