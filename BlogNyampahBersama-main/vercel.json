@@ -1,0 +1,9 @@
+{
+  "projects": [
+    {
+      "name": "BlogNyampahBersama",
+      "rootDirectory": "Ujung depan",
+      "framework": "nextjs"
+    }
+  ]
+}
