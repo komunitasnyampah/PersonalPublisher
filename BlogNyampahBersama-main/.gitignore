@@ -1,0 +1,18 @@
+# Global ignores
+node_modules/
+.env.local
+.vercel/
+.next/
+dist/
+
+# Frontend spesific
+/Frontend/node_modules/
+/Frontend/.next/
+/Frontend/.env.local
+
+# Backend spesific
+/Backend/node_modules
+/Backend/dist/
+/Backend/.env.local
+/Backend/drizzle/ # Folder output
+migrasi Drizzle
