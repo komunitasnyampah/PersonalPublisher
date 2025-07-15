@@ -2,7 +2,7 @@
   "projects": [
     {
       "name": "BlogNyampahBersama-main",
-      "rootDirectory": "Ujung depan",
+      "rootDirectory": "frontend",
       "framework": "nextjs"
     }
   ]
