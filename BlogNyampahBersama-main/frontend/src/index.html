@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>Nyampah Bersama - Blog Komunitas Lingkungan</title>
+    <meta name="description" content="Bergabunglah dengan komunitas Nyampah Bersama dalam mengadvokasi lingkungan, energi terbarukan, dan teknologi desentralisasi untuk masa depan berkelanjutan." />
+    <meta name="keywords" content="lingkungan, energi terbarukan, ekonomi berkelanjutan, teknologi desentralisasi, komunitas, blog" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Nyampah Bersama - Blog Komunitas Lingkungan" />
+    <meta property="og:description" content="Bergabunglah dengan komunitas Nyampah Bersama dalam mengadvokasi lingkungan, energi terbarukan, dan teknologi desentralisasi." />
+    <meta property="og:site_name" content="Nyampah Bersama" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Nyampah Bersama - Blog Komunitas Lingkungan" />
+    <meta name="twitter:description" content="Bergabunglah dengan komunitas Nyampah Bersama dalam mengadvokasi lingkungan, energi terbarukan, dan teknologi desentralisasi." />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Interactive JavaScript Scripts -->
+    <script>
+      // Wait for React to render before loading scripts
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          // Load DOM access script first
+          const domScript = document.createElement('script');
+          domScript.src = '/js/dom-access.js';
+          domScript.onload = function() {
+            // Load modals
+            const modalScript = document.createElement('script');
+            modalScript.src = '/js/interactive-modals.js';
+            modalScript.onload = function() {
+              // Load interactive features after modals are ready
+              const interactiveScript = document.createElement('script');
+              interactiveScript.src = '/js/interactive-features.js';
+              interactiveScript.onload = function() {
+                // Load CV interactive features
+                const cvScript = document.createElement('script');
+                cvScript.src = '/js/cv-interactive.js';
+                document.head.appendChild(cvScript);
+              };
+              document.head.appendChild(interactiveScript);
+            };
+            document.head.appendChild(modalScript);
+          };
+          document.head.appendChild(domScript);
+        }, 2000); // Wait 2 seconds for React to fully load
+      });
+    </script>
+    
+    <!-- This is a replit script which adds a banner on the top of the page when opened in development mode outside the replit environment -->
+    <script type="text/javascript" src="https://replit.com/public/js/replit-dev-banner.js"></script>
+  </body>
+</html>
